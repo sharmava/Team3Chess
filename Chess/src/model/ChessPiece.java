@@ -14,8 +14,7 @@ public abstract class ChessPiece {
 	protected int startRow;
 	protected int startColumn;
 
-	public ChessPiece(int column, int row, Player owner)
-	{
+	public ChessPiece(int column, int row, Player owner) {
 		this.column = column;
 		this.row = row;
 		this.owner = owner;
@@ -46,9 +45,8 @@ public abstract class ChessPiece {
 	public Player owner() {
 		return owner;
 	}
-	
-	public PieceType type()
-	{
+
+	public PieceType type() {
 		return type;
 	}
 }
