@@ -30,7 +30,7 @@ public class Queen extends ChessPiece {
 		rightDownDiagonal = new int[2];
 	}
 
-	public List<int[]> getMoves(ChessModel model) {
+	public List<int[]> getMoves(IChessModel model) {
 		List<int[]> moves = new ArrayList<int[]>();
 		int[] pos;
 

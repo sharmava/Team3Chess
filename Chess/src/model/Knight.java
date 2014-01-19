@@ -32,7 +32,7 @@ public class Knight extends ChessPiece {
 	}
 
 	@Override
-	public List<int[]> getMoves(ChessModel model) {
+	public List<int[]> getMoves(IChessModel model) {
 		List<int[]> moves = new ArrayList<int[]>();
 		int[] pos;
 

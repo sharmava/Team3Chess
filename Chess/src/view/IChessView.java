@@ -1,5 +1,7 @@
 package view;
 
+import java.util.List;
+
 import controller.IChessController;
 import model.ChessModel.PieceType;
 import model.ChessModel.Player;
@@ -13,5 +15,11 @@ public interface IChessView {
 	void setController(IChessController controller);
 
 	void removeImage(int column, int row);
+
+	void highlightPiece(int column, int row);
+
+	void highlightMoves(List<int[]> moves);
+
+	void removeHighlights();
 
 }

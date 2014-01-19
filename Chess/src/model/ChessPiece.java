@@ -24,7 +24,7 @@ public abstract class ChessPiece {
 		startRow = row;
 	}
 
-	public List<int[]> getMoves(ChessModel model) {
+	public List<int[]> getMoves(IChessModel model) {
 		return null;
 	}
 

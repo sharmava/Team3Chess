@@ -6,6 +6,7 @@ import java.awt.ComponentOrientation;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
@@ -39,7 +40,7 @@ public class ChessView implements IChessView {
 	private Map<PieceType, ImageIcon> whitePieceImages;
 	private Map<PieceType, ImageIcon> blackPieceImages;
 
-	private JButton[] buttons;
+	private ChessButton[] buttons;
 
 	public void start() {
 		EventQueue.invokeLater(new Runnable() {
@@ -54,7 +55,7 @@ public class ChessView implements IChessView {
 	}
 
 	public ChessView() {
-		buttons = new JButton[HEIGHT * WIDTH];
+		buttons = new ChessButton[HEIGHT * WIDTH];
 
 		whitePieceImages = new HashMap<PieceType, ImageIcon>();
 		whitePieceImages.put(
@@ -191,6 +192,38 @@ public class ChessView implements IChessView {
 	public void setController(IChessController controller) {
 		this.controller = controller;
 
+	}
+
+	@Override
+	public void highlightPiece(int column, int row) 
+	{
+		row = WIDTH - row - 1;
+		JButton button = buttons[row * WIDTH + column];
+		button.setBackground(Color.CYAN);
+	}
+
+	@Override
+	public void highlightMoves(List<int[]> moves) 
+	{
+		for(int[] coord : moves)
+		{
+			int row = WIDTH - coord[1] - 1;
+			int column = coord[0];
+			JButton button = buttons[row * WIDTH + column];
+			button.setBackground(Color.GREEN);
+		}
+	}
+
+	@Override
+	public void removeHighlights() 
+	{
+		for (int i = 0; i < buttons.length; i++) 
+		{
+			ChessButton button = buttons[i];
+			button.setBackground(Color.darkGray);
+			if ((button.row + button.column) % 2 == 0)
+				button.setBackground(Color.white);
+		}
 	}
 
 }

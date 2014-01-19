@@ -25,7 +25,10 @@ public class ChessController implements IChessController {
 
 		if (selectedPiece != null) {
 			if (piece == selectedPiece)
+			{
 				selectedPiece = null;
+				removeHighlights();
+			}
 			else if (piece == null || piece.owner() != model.getActivePlayer()) {
 				if (model.validMove(column, row, selectedPiece)) {
 					try {
@@ -46,6 +49,8 @@ public class ChessController implements IChessController {
 								king = piece1;
 								break;
 							}
+							
+						removeHighlights();
 
 						}
 
@@ -57,11 +62,29 @@ public class ChessController implements IChessController {
 					}
 				}
 			} else if (piece.owner() == model.getActivePlayer())
+			{
 				selectedPiece = piece;
+				removeHighlights();
+				addHighlights(piece);
+			}
 		} else if (piece == null)
 			return;
 		else if (piece.owner() == model.getActivePlayer())
+		{
 			selectedPiece = piece;
+			addHighlights(piece);
+		}
+	}
+
+	private void removeHighlights() 
+	{
+		view.removeHighlights();
+	}
+
+	private void addHighlights(ChessPiece piece) 
+	{
+		view.highlightPiece(piece.column(),piece.row());
+		view.highlightMoves(piece.getMoves(model));
 	}
 
 	@Override

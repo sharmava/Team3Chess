@@ -16,4 +16,6 @@ public interface IChessModel {
 	
 	boolean validMove(int column, int row, ChessPiece selectedPiece);
 
+	boolean validateCoordinates(int i, int j);
+
 }
