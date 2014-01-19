@@ -28,6 +28,11 @@ public class Rook extends ChessPiece {
 		List<int[]> moves = new ArrayList<int[]>();
 		int[] pos;
 
+		boolean moveTopFlag = true;
+		boolean moveDownFlag = true;
+		boolean moveLeftFlag = true;
+		boolean moveRightFlag = true;
+
 		for (int i = 1; i <= 7; i++) {
 			moveTop[0] = 0;
 			moveTop[1] = i;
@@ -41,33 +46,64 @@ public class Rook extends ChessPiece {
 			moveRight[0] = i;
 			moveRight[1] = 0;
 
-			pos = moveDesination(moveLeft);
-			if (model.validateCoordinates(pos[0], pos[1])
-					&& ((model.getPiece(pos[0], pos[1]) == null) || (model
-							.getPiece(pos[0], pos[1]) != null && model
-							.getPiece(pos[0], pos[1]).owner() != owner())))
-				moves.add(pos);
+			if (moveLeftFlag) {
 
-			pos = moveDesination(moveRight);
-			if (model.validateCoordinates(pos[0], pos[1])
-					&& ((model.getPiece(pos[0], pos[1]) == null) || (model
-							.getPiece(pos[0], pos[1]) != null && model
-							.getPiece(pos[0], pos[1]).owner() != owner())))
-				moves.add(pos);
+				pos = moveDesination(moveLeft);
 
-			pos = moveDesination(moveTop);
-			if (model.validateCoordinates(pos[0], pos[1])
-					&& ((model.getPiece(pos[0], pos[1]) == null) || (model
-							.getPiece(pos[0], pos[1]) != null && model
-							.getPiece(pos[0], pos[1]).owner() != owner())))
-				moves.add(pos);
+				if (model.validateCoordinates(pos[0], pos[1])
+						&& model.getPiece(pos[0], pos[1]) != null)
+					moveLeftFlag = false;
 
-			pos = moveDesination(moveDown);
-			if (model.validateCoordinates(pos[0], pos[1])
-					&& ((model.getPiece(pos[0], pos[1]) == null) || (model
-							.getPiece(pos[0], pos[1]) != null && model
-							.getPiece(pos[0], pos[1]).owner() != owner())))
-				moves.add(pos);
+				if (model.validateCoordinates(pos[0], pos[1])
+						&& ((model.getPiece(pos[0], pos[1]) == null) || (model
+								.getPiece(pos[0], pos[1]) != null && model
+								.getPiece(pos[0], pos[1]).owner() != owner())))
+					moves.add(pos);
+			}
+
+			if (moveRightFlag) {
+
+				pos = moveDesination(moveRight);
+
+				if (model.validateCoordinates(pos[0], pos[1])
+						&& model.getPiece(pos[0], pos[1]) != null)
+					moveRightFlag = false;
+
+				if (model.validateCoordinates(pos[0], pos[1])
+						&& ((model.getPiece(pos[0], pos[1]) == null) || (model
+								.getPiece(pos[0], pos[1]) != null && model
+								.getPiece(pos[0], pos[1]).owner() != owner())))
+					moves.add(pos);
+			}
+
+			if (moveTopFlag) {
+
+				pos = moveDesination(moveTop);
+
+				if (model.validateCoordinates(pos[0], pos[1])
+						&& model.getPiece(pos[0], pos[1]) != null)
+					moveTopFlag = false;
+				if (model.validateCoordinates(pos[0], pos[1])
+						&& ((model.getPiece(pos[0], pos[1]) == null) || (model
+								.getPiece(pos[0], pos[1]) != null && model
+								.getPiece(pos[0], pos[1]).owner() != owner())))
+					moves.add(pos);
+			}
+
+			if (moveDownFlag) {
+
+				pos = moveDesination(moveDown);
+
+				if (model.validateCoordinates(pos[0], pos[1])
+						&& model.getPiece(pos[0], pos[1]) != null)
+					moveDownFlag = false;
+
+				if (model.validateCoordinates(pos[0], pos[1])
+						&& ((model.getPiece(pos[0], pos[1]) == null) || (model
+								.getPiece(pos[0], pos[1]) != null && model
+								.getPiece(pos[0], pos[1]).owner() != owner())))
+					moves.add(pos);
+			}
 
 		}
 

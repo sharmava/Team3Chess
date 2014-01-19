@@ -58,6 +58,10 @@ public class ChessModel implements IChessModel {
 		addPiece(new Pawn(7, 6, Player.BLACK));
 	}
 
+	public ChessPiece[] getBoard() {
+		return board;
+	}
+
 	@Override
 	public Player getActivePlayer() {
 		return activePlayer;
@@ -123,6 +127,16 @@ public class ChessModel implements IChessModel {
 			if (board[i] != null)
 				pieces.add(board[i]);
 		return pieces;
+	}
+
+	public boolean isCheck(ChessPiece king, ChessPiece movedPiece) {
+		int row = king.row();
+		int col = king.column();
+
+		if (validMove(col, row, movedPiece))
+			return true;
+		return false;
+
 	}
 
 }

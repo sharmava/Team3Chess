@@ -11,6 +11,8 @@ public abstract class ChessPiece {
 	protected int column;
 	protected int row;
 	protected PieceType type;
+	
+
 	protected int startRow;
 	protected int startColumn;
 
@@ -49,4 +51,6 @@ public abstract class ChessPiece {
 	public PieceType type() {
 		return type;
 	}
+	
+	
 }

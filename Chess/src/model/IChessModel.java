@@ -12,6 +12,8 @@ public interface IChessModel {
 
 	List<ChessPiece> getAllPieces();
 
+	boolean isCheck(ChessPiece piece, ChessPiece movedPiece);
+	
 	boolean validMove(int column, int row, ChessPiece selectedPiece);
 
 }

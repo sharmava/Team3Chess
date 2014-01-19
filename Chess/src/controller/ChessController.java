@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.ChessModel.PieceType;
 import model.ChessModel.Player;
 import model.ChessPiece;
@@ -32,8 +35,22 @@ public class ChessController implements IChessController {
 								model.getActivePlayer());
 
 						model.movePiece(column, row, selectedPiece);
-						
-						
+
+						ChessPiece king = null;
+						List<ChessPiece> pieces = model.getAllPieces();
+						for (ChessPiece piece1 : pieces) {
+
+							if (piece1.type().name() == "KING"
+									&& model.getActivePlayer() == piece1
+											.owner()) {
+								king = piece1;
+								break;
+							}
+
+						}
+
+						if (model.isCheck(king, selectedPiece))
+							System.out.println("Check");
 
 					} catch (Exception e) {
 						throw new IllegalArgumentException("Move was invalid");
