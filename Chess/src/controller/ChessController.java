@@ -13,11 +13,13 @@ import view.IChessView;
 public class ChessController implements IChessController {
 	private IChessView view;
 	private IChessModel model;
-	private ChessPiece selectedPiece;
+	private ChessPiece selectedPiece,king,checkedPiece;
 
 	public ChessController(IChessView view, IChessModel model) {
 		this.view = view;
 		this.model = model;
+		king=null;
+		checkedPiece=null;
 	}
 
 	@Override
@@ -40,16 +42,48 @@ public class ChessController implements IChessController {
 							eliminatedPiece.setIsDead(true);
 							saveMove(row, column,eliminatedPiece);
 						}
+						
+						
 						int[] startPos = new int[]{selectedPiece.row(), selectedPiece.column()};
-						view.removeImage(selectedPiece.column(),
-								selectedPiece.row());
-						view.setImage(column, row, selectedPiece.type(),
-								model.getActivePlayer());
+						int col=0,row1=0;
+						boolean check = false;
+						if(checkedPiece!=null){
+							 col=startPos[0];
+							 row1=startPos[1];
+							check=true;
+							view.removeImage(selectedPiece.column(),
+									selectedPiece.row());
+							model.movePiece(column, row, selectedPiece);
+							saveMove(startPos[0],startPos[1],selectedPiece);
+							
+						}
+						
+						if(checkedPiece!=null && model.isCheck(king, checkedPiece)){
+							System.out.println("Invalid Move");
+							undoMove();
+							System.out.println(model.getActivePlayer());
+						}
+						else{
+							
+						if(check){
 
-						model.movePiece(column, row, selectedPiece);
-						//saves the present move
-						saveMove(startPos[0],startPos[1],selectedPiece);
-						ChessPiece king = null;
+							model.togglePlayer();
+							view.setImage(column, row, selectedPiece.type(),
+							model.getActivePlayer());
+							model.togglePlayer();
+							checkedPiece=null;
+							king=null;
+						}else{
+							view.removeImage(selectedPiece.column(),
+									selectedPiece.row());
+							view.setImage(column, row, selectedPiece.type(),
+									model.getActivePlayer());
+							model.movePiece(column, row, selectedPiece);
+							//saves the present move
+							saveMove(startPos[0],startPos[1],selectedPiece);
+						}
+						
+
 						List<ChessPiece> pieces = model.getAllPieces();
 						for (ChessPiece piece1 : pieces) {
 
@@ -60,13 +94,16 @@ public class ChessController implements IChessController {
 								break;
 							}
 							
-						removeHighlights();
+							removeHighlights();
 
 						}
 
-						if (model.isCheck(king, selectedPiece))
+						if (model.isCheck(king, selectedPiece)){
 							System.out.println("Check");
+							checkedPiece=selectedPiece;
 
+						}
+						}
 					} catch (Exception e) {
 						throw new IllegalArgumentException("Move was invalid");
 					}

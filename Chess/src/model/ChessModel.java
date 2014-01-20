@@ -73,6 +73,14 @@ public class ChessModel implements IChessModel {
 	public void setActivePlayer(Player activePlayer) {
 		this.activePlayer = activePlayer;
 	}
+	
+	public void togglePlayer()
+	{
+		if(activePlayer == Player.WHITE)
+			activePlayer = Player.BLACK;
+		else
+			activePlayer = Player.WHITE;
+	}
 
 	@Override
 	public ChessPiece getPiece(int column, int row) {
