@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.Stack;
 
 import model.ChessModel.PieceType;
 import model.ChessModel.Player;
@@ -51,6 +52,84 @@ public abstract class ChessPiece {
 	public PieceType type() {
 		return type;
 	}
+	
+	private Boolean isDead = false;
+	/**
+	 * @return the isDead
+	 */
+	public Boolean getIsDead() {
+		return isDead;
+	}
+
+	/**
+	 * @param isDead the isDead to set
+	 */
+	public void setIsDead(Boolean isDead) {
+		this.isDead = isDead;
+	}
+
+	
+	private Stack<int []> moves;
+	private Stack<int []> redoMoves;
+	
+	public void storeMove(int row, int column){
+		
+		if(this.moves == null)
+		{
+			this.moves = new Stack<int []>();
+		}
+		
+		moves.push(new int[]{row,column});
+		
+	}
+	
+
+	public void saveRedoMove(int row, int column){
+		
+		if(this.redoMoves == null)
+		{
+			this.redoMoves = new Stack<int []>();
+		}
+		
+		redoMoves.push(new int[]{row,column});
+		
+	}
+	
+	public int[] getPreviousMove(){
+		
+		if(this.moves == null)
+		{//when no move is made
+			return null;
+		}
+		else if(this.moves.isEmpty())
+		{//when stack has collapsed
+			return null;
+		}
+		else
+		{
+			int[] prevMove = this.moves.pop();
+			return prevMove;
+		}
+	}
+	
+	
+    public int[] getRedoMove(){
+		
+		if(this.redoMoves == null)
+		{//when no move is made
+			return null;
+		}
+		else if(this.redoMoves.isEmpty())
+		{//when stack has collapsed
+			return null;
+		}
+		else
+		{
+			int[] redoMove = this.redoMoves.pop();
+			return redoMove;
+		}
+	}
+	
 	
 	
 }

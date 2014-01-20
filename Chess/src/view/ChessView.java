@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
+import controller.ChessController;
 import controller.IChessController;
 import model.ChessModel.PieceType;
 import model.ChessModel.Player;
@@ -23,6 +24,7 @@ import model.ChessModel.Player;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class ChessView implements IChessView {
 
@@ -35,6 +37,9 @@ public class ChessView implements IChessView {
 	private JPanel gridJPanel = new JPanel();
 	private JToolBar soleJToolBar = new JToolBar();
 	private JButton newGameButton = new JButton("New game");
+	//Adding undo move button to the panel
+	private JButton undoMoveButton = new JButton("Undo Move");
+	private JButton redoMoveButton = new JButton("Redo Move");
 	private JLabel checkNotifier = new JLabel("Check");
 
 	private Map<PieceType, ImageIcon> whitePieceImages;
@@ -146,8 +151,83 @@ public class ChessView implements IChessView {
 				}
 			});
 		}
+		
+		//add a listener for the undo button
+		this.undoMoveButton.addMouseListener(new UndoListener());
+		this.redoMoveButton.addMouseListener(new RedoListener());
+	}
+	
+	private class UndoListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// 
+			((ChessController) controller).undoMove();
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// 
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// 
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// 
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		
+	}
+	
+	private class RedoListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// 
+			((ChessController) controller).redoMove();
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// 
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// 
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// 
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		
 	}
 
+	
 	private void initializeGridJPanel() {
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.setRows(8);
@@ -161,6 +241,8 @@ public class ChessView implements IChessView {
 				.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		this.soleJToolBar.setFloatable(false);
 		this.soleJToolBar.add(this.newGameButton);
+		this.soleJToolBar.add(this.undoMoveButton);
+		this.soleJToolBar.add(this.redoMoveButton);
 		this.soleJToolBar.add(new JToolBar.Separator());
 		this.soleJToolBar.add(new JToolBar.Separator());
 		this.soleJToolBar.add(new JToolBar.Separator());

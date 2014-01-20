@@ -67,6 +67,13 @@ public class ChessModel implements IChessModel {
 		return activePlayer;
 	}
 
+	/**
+	 * Setting the active player. Implemented for undo functionality
+	 */
+	public void setActivePlayer(Player activePlayer) {
+		this.activePlayer = activePlayer;
+	}
+
 	@Override
 	public ChessPiece getPiece(int column, int row) {
 		if (!validateCoordinates(row, column))
@@ -88,16 +95,23 @@ public class ChessModel implements IChessModel {
 					"Cannot move piece not belonging to active player.");
 
 		if (validMove(column, row, piece)) {
-			removePiece(piece);
-			piece.setRow(row);
-			piece.setColumn(column);
-			addPiece(piece);
-			if (activePlayer == Player.WHITE)
+			makeMove(column, row, piece);
+			
+			//swap the active player
+			if(activePlayer == Player.WHITE)
 				activePlayer = Player.BLACK;
 			else
 				activePlayer = Player.WHITE;
 		} else
 			throw new GameException("Cannot move piece to the given position");
+	}
+	
+	public void makeMove(int column, int row, ChessPiece piece)
+	{
+		removePiece(piece);
+		piece.setRow(row);
+		piece.setColumn(column);
+		addPiece(piece);
 	}
 
 	@Override
